@@ -2,6 +2,7 @@
 @author: 成昊
 @desc: 对 dataframe 进行分词处理, 生成 tfidf 模型用于匹配
 """
+import sys
 import pickle
 import numpy as np
 from config import *
@@ -38,9 +39,12 @@ def run():
     tokenizer = MatchTokenizer()
     cut_jd = []
 
-    for _, row in jds.iterrows():
+    for idx, row in jds.iterrows():
         cut = tokenizer.cut(row['职位描述'])
         cut_jd.append(' '.join(cut))
+        if idx % 1000 == 0 or idx == len(jds)-1:
+            sys.stdout.write('\rProcessing %.2f%%' % ((idx+1)/len(jds)))
+            sys.stdout.flush()
     del jds['职位描述']
     print('Done!')
 
