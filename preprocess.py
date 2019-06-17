@@ -12,7 +12,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 def max_pooling(tfidf, title_idx, title_count):
-    print('dims: ', tfidf.shape, title_idx.shape, title_count)
     words_dim = tfidf.shape[1]
     result = []
     for _ in range(title_count):
@@ -22,6 +21,25 @@ def max_pooling(tfidf, title_idx, title_count):
         idx = title_idx[i]
         result[idx] = np.max([result[idx], tfidf[i, :].toarray()], axis=0)
     return result
+
+
+def avg_pooling(tfidf, title_idx, title_count):
+    words_dim = tfidf.shape[1]
+    result = []
+    count = []
+    for _ in range(title_count):
+        result.append(np.zeros((1, words_dim)))
+        count.append(0)
+
+    for i in range(tfidf.shape[0]):
+        idx = title_idx[i]
+        result[idx] += tfidf[i, :].toarray()
+        count[idx] += 1
+
+    for idx in range(title_count):
+        result[idx] /= count[idx]
+    return result
+
 
 
 def text2tfidf(text):
@@ -70,7 +88,7 @@ def run():
         with open('./tfidf_cache.pkl', 'wb') as f:
             pickle.dump((tfidf, tv), f)
 
-    print('Max pooling...')
+    print('Avg pooling...')
     title_set = set()
     for title in jds['standard_title']:
         title_set.add(title)
