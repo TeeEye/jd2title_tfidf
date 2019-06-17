@@ -50,6 +50,9 @@ def run():
             for line in f:
                 trie.insert(line.strip())
 
+        with open(TRIE_PATH, 'wb') as f:
+            pickle.dump(trie, f)
+
         cut_jd = []
 
         for idx, row in jds.iterrows():
@@ -67,6 +70,8 @@ def run():
         print('Converting to TF-IDF...')
         tfidf, tv = text2tfidf(cut_jd)
         print('Done')
+        with open('./tfidf_cache.pkl', 'wb') as f:
+            pickle.dump((tfidf, tv), f)
 
     print('Max pooling...')
     title2idx = {val: idx for idx, val in enumerate(jds['standard_title'])}
