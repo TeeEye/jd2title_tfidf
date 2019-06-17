@@ -24,7 +24,11 @@ def max_pooling(tfidf, title_idx, title_count):
 
 def text2tfidf(text):
     tv = TfidfVectorizer(token_pattern=r"(?u)\b\w+\b")
-    tfidf = tv.fit_transform(text)
+    try:
+        tfidf = tv.fit_transform(text)
+    except ValueError:
+        print(text)
+        assert False
     return tfidf, tv
 
 
