@@ -29,7 +29,7 @@ def text2tfidf(text):
 
 def run():
     print('Preprocess start')
-    with open(DATA_PATH) as data_file:
+    with open(DATA_PATH, 'rb') as data_file:
         jds = pickle.load(data_file)
     jds = jds[['职位描述', 'standard_title']]
     print('JD data loaded')
