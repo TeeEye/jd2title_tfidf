@@ -15,7 +15,7 @@ class WeightSearcher:
             self.trie = pickle.load(f)
         print('Done')
 
-    def search(self, sentence):
+    def search(self, sentence, topk = 3):
         sentence = self.trie.cut(sentence)
         indices = []
         print(sentence)
@@ -24,14 +24,11 @@ class WeightSearcher:
             if word in self.vectorizer.vocabulary_:
                 print(self.vectorizer.vocabulary_[word])
                 indices.append(self.vectorizer.vocabulary_[word])
-        idx = 0
-        max_val = 0
+        result = []
         for i in range(len(self.tfidf)):
             current = 0
             for j in indices:
                 current += self.tfidf[i][0, j]
-            print(i, current)
-            if current > max_val:
-                max_val = current
-                idx = i
-        return self.idx2title[idx]
+            result.append((current, i))
+        result.sort(reverse=True)
+        return [self.idx2title[result[i][1]] for i in range(topk)]

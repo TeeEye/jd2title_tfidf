@@ -41,7 +41,6 @@ def avg_pooling(tfidf, title_idx, title_count):
     return result
 
 
-
 def text2tfidf(text):
     tv = TfidfVectorizer(token_pattern=r"(?u)\b\w+\b")
     try:
