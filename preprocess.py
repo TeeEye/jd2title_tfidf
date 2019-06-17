@@ -6,7 +6,7 @@ import sys
 import pickle
 import numpy as np
 from config import *
-from tokenizer import MatchTokenizer
+from trie import TrieTree
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 
@@ -36,12 +36,15 @@ def run():
     print('JD data loaded')
 
     print('Cutting sentence...')
-    tokenizer = MatchTokenizer()
+    trie = TrieTree()
     cut_jd = []
 
     for idx, row in jds.iterrows():
-        cut = tokenizer.cut(row['职位描述'])
-        cut_jd.append(' '.join(cut))
+        temp = []
+        cut = trie.contains(row['职位描述'], dump=True)
+        for word in cut:
+            temp.append(''.join(word[0]))
+        cut_jd.append(' '.join(temp))
         if idx % 1000 == 0 or idx == len(jds)-1:
             sys.stdout.write('\rProcessing %.2f%%' % ((idx+1)/len(jds)))
             sys.stdout.flush()
