@@ -185,7 +185,6 @@ class TrieTree():
         tag_list = set(tag_list)
         if tag_list and self.merge_tags:
             if not self.all_tags & tag_list:
-                print('line 204')
                 return []
 
         use_list = []
@@ -193,7 +192,6 @@ class TrieTree():
         for (idx, word) in enumerate(pre):
             word_o = word
             if word_o == self.endF:
-                print('line 213')
                 word_o = u'\\' + word_o
 
             for index in range(len(use_list) - 1, -1, -1):
