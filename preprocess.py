@@ -23,7 +23,7 @@ def max_pooling(tfidf, title_idx, title_count):
 
 
 def text2tfidf(text):
-    tv = TfidfVectorizer()
+    tv = TfidfVectorizer(token_pattern=r"(?u)\b\w+\b")
     tfidf = tv.fit_transform(text)
     return tfidf, tv
 
@@ -46,7 +46,7 @@ def run():
             temp.append(''.join(word[0]))
         cut_jd.append(' '.join(temp))
         if idx % 1000 == 0 or idx == len(jds)-1:
-            sys.stdout.write('\rProcessing %.2f%%' % ((idx+1)/len(jds)))
+            sys.stdout.write('\rProcessing %.2f%%' % (100*(idx+1)/len(jds)))
             sys.stdout.flush()
     del jds['职位描述']
     print('Done!')

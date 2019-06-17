@@ -1,4 +1,4 @@
-class TrieTree():
+class TrieTree:
 
     def __init__(self, merge_tags=True):
         self.data = {}
