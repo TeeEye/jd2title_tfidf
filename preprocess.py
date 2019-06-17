@@ -12,7 +12,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 def max_pooling(tfidf, title_idx, title_count):
-    print('tfidf dim:', tfidf.shape)
+    print('dims: ', tfidf.shape, title_idx.shape, title_count)
     words_dim = tfidf.shape[1]
     result = []
     for _ in range(title_count):
@@ -74,8 +74,11 @@ def run():
             pickle.dump((tfidf, tv), f)
 
     print('Max pooling...')
-    title2idx = {val: idx for idx, val in enumerate(jds['standard_title'])}
-    idx2title = {idx: val for idx, val in enumerate(jds['standard_title'])}
+    title_set = set()
+    for title in jds['standard_title']:
+        title_set.add(title)
+    title2idx = {val: idx for idx, val in enumerate(title_set)}
+    idx2title = {idx: val for idx, val in enumerate(title_set)}
     title_idx = [title2idx[title] for title in jds['standard_title']]
     tfidf = max_pooling(tfidf, title_idx, len(title2idx))
     print('Done')
