@@ -2,6 +2,7 @@
 @author: 成昊
 @desc: 对 dataframe 进行分词处理, 生成 tfidf 模型用于匹配
 """
+import os
 import sys
 import pickle
 import numpy as np
@@ -11,6 +12,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 def max_pooling(tfidf, title_idx, title_count):
+    print('tfidf dim:', tfidf.shape)
     words_dim = tfidf.shape[1]
     result = []
     for _ in range(title_count):
@@ -39,29 +41,32 @@ def run():
     jds = jds[['职位描述', 'standard_title']]
     print('JD data loaded')
 
-    print('Cutting sentence...')
-    trie = TrieTree()
-    with open(SKILL_PATH, 'r') as f:
-        for line in f:
-            trie.insert(line.strip())
+    if os.path.exists('./tfidf_cache.pkl'):
+        tfidf, tv = pickle.load(open('./tfidf_cache.pkl', 'rb'))
+    else:
+        print('Cutting sentence...')
+        trie = TrieTree()
+        with open(SKILL_PATH, 'r') as f:
+            for line in f:
+                trie.insert(line.strip())
 
-    cut_jd = []
+        cut_jd = []
 
-    for idx, row in jds.iterrows():
-        temp = []
-        cut = trie.contains(row['职位描述'], dump=True)
-        for word in cut:
-            temp.append(''.join(word[0]))
-        cut_jd.append(' '.join(temp))
-        if idx % 1000 == 0 or idx == len(jds)-1:
-            sys.stdout.write('\rProcessing %.2f%%' % (100*(idx+1)/len(jds)))
-            sys.stdout.flush()
-    del jds['职位描述']
-    print('Done!')
+        for idx, row in jds.iterrows():
+            temp = []
+            cut = trie.contains(row['职位描述'], dump=True)
+            for word in cut:
+                temp.append(''.join(word[0]))
+            cut_jd.append(' '.join(temp))
+            if idx % 1000 == 0 or idx == len(jds)-1:
+                sys.stdout.write('\rProcessing %.2f%%' % (100*(idx+1)/len(jds)))
+                sys.stdout.flush()
+        del jds['职位描述']
+        print('Done!')
 
-    print('Converting to TF-IDF...')
-    tfidf, tv = text2tfidf(cut_jd)
-    print('Done')
+        print('Converting to TF-IDF...')
+        tfidf, tv = text2tfidf(cut_jd)
+        print('Done')
 
     print('Max pooling...')
     title2idx = {val: idx for idx, val in enumerate(jds['standard_title'])}
@@ -71,12 +76,12 @@ def run():
     print('Done')
 
     print('Saving result...')
+    with open(TFIDF_PATH, 'wb') as f:
+        pickle.dump(tfidf, f)
     with open(TITLE2IDX_PATH, 'wb') as f:
         pickle.dump(title2idx, f)
     with open(IDX2TITLE_PATH, 'wb') as f:
         pickle.dump(idx2title, f)
-    with open(TFIDF_PATH, 'wb') as f:
-        pickle.dump(tfidf, f)
     with open(VECTORIZER_PATH, 'wb') as f:
         pickle.dump(tv, f)
     print('All done!')
