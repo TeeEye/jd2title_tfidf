@@ -56,11 +56,8 @@ def run():
         cut_jd = []
 
         for idx, row in jds.iterrows():
-            temp = []
-            cut = trie.contains(row['职位描述'], dump=True)
-            for word in cut:
-                temp.append(''.join(word[0]))
-            cut_jd.append(' '.join(temp))
+            cut = trie.cut(row['职位描述'])
+            cut_jd.append(' '.join(cut))
             if idx % 1000 == 0 or idx == len(jds)-1:
                 sys.stdout.write('\rProcessing %.2f%%' % (100*(idx+1)/len(jds)))
                 sys.stdout.flush()

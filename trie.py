@@ -173,6 +173,13 @@ class TrieTree:
         new_result.append(result[max_l - 1])
         return new_result;
 
+    def cut(self, pre):
+        temp = []
+        cut = self.contains(pre, dump=True)
+        for word in cut:
+            temp.append(''.join(word[0]))
+        return temp
+
     def contains(self, pre, tag_list=[], dump=False):
         """
         check the pre list in the pres,return
