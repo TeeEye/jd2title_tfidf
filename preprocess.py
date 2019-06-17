@@ -41,6 +41,10 @@ def run():
 
     print('Cutting sentence...')
     trie = TrieTree()
+    with open(SKILL_PATH, 'r') as f:
+        for line in f:
+            trie.insert(line.strip())
+
     cut_jd = []
 
     for idx, row in jds.iterrows():
