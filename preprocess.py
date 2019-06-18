@@ -94,7 +94,7 @@ def run():
     title2idx = {val: idx for idx, val in enumerate(title_set)}
     idx2title = {idx: val for idx, val in enumerate(title_set)}
     title_idx = [title2idx[title] for title in jds['standard_title']]
-    tfidf = max_pooling(tfidf, title_idx, len(title2idx))
+    tfidf = avg_pooling(tfidf, title_idx, len(title2idx))
     print('Done')
 
     print('Saving result...')
