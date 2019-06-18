@@ -187,7 +187,6 @@ class TrieTree:
         """
         pre = pre.lower()
         if not pre:
-            print('empty input')
             return []
         tag_list = set(tag_list)
         if tag_list and self.merge_tags:
