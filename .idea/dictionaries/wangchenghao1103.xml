@@ -2,6 +2,8 @@
   <dictionary name="wangchenghao1103">
     <words>
       <w>tfidf</w>
+      <w>topk</w>
+      <w>vectorizer</w>
     </words>
   </dictionary>
 </component>
