@@ -58,8 +58,8 @@ def run():
     jds = jds[['职位描述', 'standard_title']]
     print('JD data loaded')
 
-    if os.path.exists('./tfidf_cache.pkl'):
-        tfidf, tv = pickle.load(open('./tfidf_cache.pkl', 'rb'))
+    if os.path.exists(TFIDF_CACHE_PATH):
+        tfidf, tv = pickle.load(open(TFIDF_CACHE_PATH, 'rb'))
     else:
         print('Cutting sentence...')
         trie = TrieTree()
@@ -84,7 +84,7 @@ def run():
         print('Converting to TF-IDF...')
         tfidf, tv = text2tfidf(cut_jd)
         print('Done')
-        with open('./tfidf_cache.pkl', 'wb') as f:
+        with open(TFIDF_CACHE_PATH, 'wb') as f:
             pickle.dump((tfidf, tv), f)
 
     print('Avg pooling...')

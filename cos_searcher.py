@@ -2,9 +2,9 @@ from config import *
 import pickle
 from time import time
 import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
 
-
-class WeightSearcher:
+class CosSearcher:
     def __init__(self):
         start = time()
         print('WeightSearcher initiating...')
@@ -22,16 +22,10 @@ class WeightSearcher:
         sentence = self.trie.cut(sentence)
         if len(sentence) == 0:
             return ['No keyword detected']
-        indices = []
-        for word in sentence:
-            if word in self.vectorizer.vocabulary_:
-                indices.append(self.vectorizer.vocabulary_[word])
+        vec = self.vectorizer.transform(sentence)
         result = []
         for i in range(len(self.tfidf)):
-            current = 0
-            for j in indices:
-                current += self.tfidf[i][0, j]
-            result.append((current, i))
+            result.append((cosine_similarity(vec, self.tfidf[i]), i))
         result.sort(reverse=True)
         return [self.idx2title[result[i][1]] for i in range(topk)]
 
