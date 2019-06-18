@@ -49,3 +49,15 @@ class WeightSearcher:
 
             result.append(match)
         return np.array(result)
+
+    def match(self, jd, title, topk=1):
+        result = []
+        for i in range(len(jd)):
+            j_titles = self.search(jd[i], topk)
+            match = 0
+            for j in j_titles:
+                if j == title:
+                    match = 1
+
+            result.append(match)
+        return np.array(result)
