@@ -26,8 +26,8 @@ class CosSearcher:
         result = []
         for i in range(len(self.tfidf)):
             sim = cosine_similarity(vec, self.tfidf[i])
-            print(i, sim)
-            result.append(sim, i)
+            print(i, sim[0,0])
+            result.append((sim[0,0], i))
         result.sort(reverse=True)
         return [self.idx2title[result[i][1]] for i in range(topk)]
 
