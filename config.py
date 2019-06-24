@@ -1,5 +1,5 @@
 SKILL_PATH = '/data/tfidf/skills.txt'
-DATA_PATH = '/data/tfidf/jd.pkl'
+DATA_PATH = '/data/jd_gt_10.pkl'
 TITLE2IDX_PATH = '/data/tfidf/title2idx.pkl'
 IDX2TITLE_PATH = '/data/tfidf/idx2title.pkl'
 TFIDF_PATH = '/data/tfidf/tfidf.pkl'

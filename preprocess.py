@@ -55,7 +55,7 @@ def run():
     print('Preprocess start')
     with open(DATA_PATH, 'rb') as data_file:
         jds = pickle.load(data_file)
-    jds = jds[['职位描述', 'standard_title']]
+    jds = jds[['job_description', 'standard_title']]
     print('JD data loaded')
 
     if os.path.exists(TFIDF_CACHE_PATH):
@@ -73,12 +73,11 @@ def run():
         cut_jd = []
 
         for idx, row in jds.iterrows():
-            cut = trie.cut(row['职位描述'])
+            cut = trie.cut(row['job_description'])
             cut_jd.append(' '.join(cut))
             if idx % 1000 == 0 or idx == len(jds)-1:
                 sys.stdout.write('\rProcessing %.2f%%' % (100*(idx+1)/len(jds)))
                 sys.stdout.flush()
-        del jds['职位描述']
         print('Done!')
 
         print('Converting to TF-IDF...')

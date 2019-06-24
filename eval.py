@@ -21,4 +21,5 @@ if __name__ == '__main__':
         if flag:
             right += 1
 
+
     print("accuracy: %lf" % (right/len(data)))
