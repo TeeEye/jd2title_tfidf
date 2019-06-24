@@ -16,7 +16,7 @@ class WeightSearcher:
             self.idx2title = pickle.load(f)
         with open(TRIE_PATH, 'rb') as f:
             self.trie = pickle.load(f)
-        print('Done with timecost: %.3f' % (time() - start))
+        print('Done with timecost: %.3f, title count: %d' % ((time() - start), len(self.tfidf)))
 
     def search(self, sentence, topk=3):
         sentence = self.trie.cut(sentence)
