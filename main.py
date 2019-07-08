@@ -4,5 +4,8 @@ from cos_searcher import CosSearcher
 if __name__ == '__main__':
     searcher = WeightSearcher()
     while True:
-        s = input('>> ')
-        print(searcher.search(s))
+        try:
+            s = input('>> ')
+            print(searcher.search(s))
+        except UnicodeDecodeError:
+            continue

@@ -1,3 +1,8 @@
+"""
+基于传统加权和的检索方法
+"""
+
+
 from config import *
 import pickle
 from time import time

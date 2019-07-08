@@ -1,3 +1,7 @@
+"""
+基于 cos 距离的检索方法，效果不佳
+"""
+
 from config import *
 import pickle
 from time import time
