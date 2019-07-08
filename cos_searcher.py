@@ -8,6 +8,7 @@ from time import time
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
+
 class CosSearcher:
     def __init__(self):
         start = time()
