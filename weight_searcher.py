@@ -7,6 +7,7 @@ from config import *
 import pickle
 from time import time
 import numpy as np
+from rec import rec
 
 
 class WeightSearcher:
@@ -24,20 +25,21 @@ class WeightSearcher:
         print('Done with timecost: %.3f, title count: %d' % ((time() - start), len(self.tfidf)))
 
     def search(self, sentence, topk=3):
-        sentence = self.trie.cut(sentence)
-        if len(sentence) == 0:
-            return ['No keyword detected']
-        indices = []
-        for word in sentence:
-            if word in self.vectorizer.vocabulary_:
-                indices.append(self.vectorizer.vocabulary_[word])
-        result = []
-        for i in range(len(self.tfidf)):
-            current = 0
-            for j in indices:
-                current += self.tfidf[i][0, j]
-            result.append((current, i))
-        result.sort(reverse=True)
+        with rec('', False):
+            sentence = self.trie.cut(sentence)
+            if len(sentence) == 0:
+                return ['No keyword detected']
+            indices = []
+            for word in sentence:
+                if word in self.vectorizer.vocabulary_:
+                    indices.append(self.vectorizer.vocabulary_[word])
+            result = []
+            for i in range(len(self.tfidf)):
+                current = 0
+                for j in indices:
+                    current += self.tfidf[i][0, j]
+                result.append((current, i))
+            result.sort(reverse=True)
         return [self.idx2title[result[i][1]] for i in range(topk)]
 
     def eval(self, summary, jd, topk=1):

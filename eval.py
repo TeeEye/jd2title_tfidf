@@ -2,6 +2,7 @@ from weight_searcher import WeightSearcher
 import pickle
 from config import DATA_PATH
 from knowledge_graph import KnowledgeGraph
+from rec import reset, get_total_time_cost
 
 
 if __name__ == '__main__':
@@ -10,6 +11,7 @@ if __name__ == '__main__':
     kg = KnowledgeGraph()
     data_len = 10000
     data = data.sample(frac=data_len/len(data))
+    reset()
 
     right = 0
 
@@ -23,3 +25,4 @@ if __name__ == '__main__':
             right += 1
 
     print("accuracy: %lf" % (right/len(data)))
+    print('time cost:', get_total_time_cost())
