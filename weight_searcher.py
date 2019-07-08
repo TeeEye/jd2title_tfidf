@@ -25,7 +25,7 @@ class WeightSearcher:
         print('Done with timecost: %.3f, title count: %d' % ((time() - start), len(self.tfidf)))
 
     def search(self, sentence, topk=3):
-        with rec('', False):
+        with rec('WeightSearcher', False):
             sentence = self.trie.cut(sentence)
             if len(sentence) == 0:
                 return ['No keyword detected']
