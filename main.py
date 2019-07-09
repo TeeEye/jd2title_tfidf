@@ -2,7 +2,8 @@ from weight_searcher import WeightSearcher
 # from cos_searcher import CosSearcher
 
 if __name__ == '__main__':
-    searcher = WeightSearcher()
+    print('--* Interactive JD2Title *--')
+    searcher = WeightSearcher(verbose=True)
     while True:
         try:
             s = input('>> ')

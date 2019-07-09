@@ -9,8 +9,9 @@ from rec import rec
 
 
 class WeightSearcher:
-    def __init__(self):
-        with rec('WeightSearcher Initiation'):
+    def __init__(self, verbose=False):
+        self.verbose=verbose
+        with rec('WeightSearcher Initiation', verbose):
             with open(TFIDF_PATH, 'rb') as f:
                 self.tfidf = pickle.load(f)
             with open(VECTORIZER_PATH, 'rb') as f:
@@ -20,8 +21,8 @@ class WeightSearcher:
             with open(TRIE_PATH, 'rb') as f:
                 self.trie = pickle.load(f)
 
-    def search(self, sentence, topk=3, verbose=False):
-        with rec('WeightSearcher', verbose):
+    def search(self, sentence, topk=3):
+        with rec('WeightSearcher', verbose=self.verbose):
             sentence = self.trie.cut(sentence)
             if len(sentence) == 0:
                 raise ValueError('No keyword detected!')
