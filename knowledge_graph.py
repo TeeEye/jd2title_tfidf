@@ -1,3 +1,8 @@
+"""
+@author:    chenghao
+@desc:      知识图谱的树模型, 通过 json 构建, 用于寻找两个节点的最近公共祖先 (lca)
+"""
+
 from config import *
 import json
 from rec import rec

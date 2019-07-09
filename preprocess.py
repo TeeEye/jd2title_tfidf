@@ -1,8 +1,7 @@
 """
-@author: 成昊
-@desc: 对 dataframe 进行分词处理, 生成 tfidf 模型用于匹配
+@author:    chenghao
+@desc:      对 data frame 进行分词处理, 生成 tfidf 模型用于匹配
 """
-import os
 import sys
 import pickle
 import numpy as np

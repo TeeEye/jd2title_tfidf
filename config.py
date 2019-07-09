@@ -1,3 +1,8 @@
+"""
+@author:    chenghao
+@desc:      保存宏变量, 包括超参数和路径名
+"""
+
 import os
 import data
 

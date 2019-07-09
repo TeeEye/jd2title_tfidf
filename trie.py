@@ -1,3 +1,8 @@
+"""
+@author:    xuen
+@desc:      基于 Trie 的分词器
+"""
+
 class TrieTree:
 
     def __init__(self, merge_tags=True):
