@@ -1,6 +1,7 @@
 import time
+from collections import defaultdict
 
-_total_time_cost = 0
+_total_time_cost = defaultdict(int)
 
 
 class Timer:
@@ -18,7 +19,7 @@ class Timer:
     def __exit__(self, *args):
         global _total_time_cost
         time_cost = time.time() - self.start
-        _total_time_cost += time_cost
+        _total_time_cost[self.task] += time_cost
         if self.verbose:
             print('[%s] finished with time cost: %.3f' % (self.task, time_cost))
 
@@ -27,10 +28,10 @@ def rec(task, verbose=True):
     return Timer(task, verbose)
 
 
-def reset():
+def reset(key):
     global _total_time_cost
-    _total_time_cost = 0
+    _total_time_cost[key] = 0
 
 
-def get_total_time_cost():
-    return _total_time_cost
+def get_total_time_cost(key):
+    return _total_time_cost[key]
